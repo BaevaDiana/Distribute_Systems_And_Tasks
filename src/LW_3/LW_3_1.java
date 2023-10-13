@@ -38,7 +38,6 @@ class LW_3_1 {
             int tag = MPI.ANY_TAG;
             int[] back_buf;
             int[] back_buf2 = new int[buf.length];
-
             // проверка первого сообщения (от процесса 0)
             while (true) {
                 st = MPI.COMM_WORLD.Iprobe(source, tag); // проверка наличия сообщения
@@ -53,7 +52,6 @@ class LW_3_1 {
                 System.out.print(back_buf[i] + " ");
             }
             System.out.println();
-
             // проверка второго сообщения (от процесса 1)
             while (true) {
                 st = MPI.COMM_WORLD.Iprobe(source, tag);
