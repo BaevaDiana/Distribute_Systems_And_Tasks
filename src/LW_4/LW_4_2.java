@@ -19,15 +19,17 @@ public class LW_4_2 {
             double[][] matrix = new double[N][N];
             double[] vector = new double[N];
             Random rand = new Random();
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
+            // заполнение матрицы и вектора случайными значениями
+            int i, j;
+            for (i = 0; i < N; i++) {
+                for (j = 0; j < N; j++) {
                     matrix[i][j] = rand.nextDouble(100);
                 }
                 vector[i] = rand.nextDouble(100);
             }
 
             // отправка данных в slaves
-            for (int i = 1; i < size; i++) {
+            for (i = 1; i < size; i++) {
                 MPI.COMM_WORLD.Irsend(new double[]{N}, 0, 1, MPI.DOUBLE, i, 0);
                 MPI.COMM_WORLD.Irsend(matrix[i - 1], 0, N, MPI.DOUBLE, i, 1);
                 MPI.COMM_WORLD.Irsend(vector, 0, N, MPI.DOUBLE, i, 2);
@@ -36,8 +38,8 @@ public class LW_4_2 {
             // вычисление локального скалярного произведения
             double localResult = 0;
             Stopwatch stopwatch = Stopwatch.createStarted();
-            for (int i = 0; i < N / size; i++) {
-                for (int j = 0; j < N; j++) {
+            for (i = 0; i < N / size; i++) {
+                for (j = 0; j < N; j++) {
                     localResult += matrix[i][j] * vector[j];
                 }
             }
@@ -47,7 +49,7 @@ public class LW_4_2 {
             // получение результата из slaves
             double[] results = new double[size];
             results[0] = localResult;
-            for (int i = 1; i < size; i++) {
+            for (i = 1; i < size; i++) {
                 MPI.COMM_WORLD.Recv(new double[]{localResult}, 0, 1, MPI.DOUBLE, i, 3);
                 results[i] = localResult;
             }
@@ -57,7 +59,6 @@ public class LW_4_2 {
             for (double result : results) {
                 globalResult += result;
             }
-
             System.out.println("Скалярное произведение: " + globalResult);
             System.out.println("Затраченное время: " + elapsedTime + " milliseconds");
         } else {

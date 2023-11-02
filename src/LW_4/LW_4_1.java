@@ -19,6 +19,7 @@ public class LW_4_1 {
             double[][] matrix = new double[N][N];
             double[] vector = new double[N];
             Random rand = new Random();
+            // заполнение матрицы и вектора случайными значениями
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
                     matrix[i][j] = rand.nextDouble(100);
@@ -79,7 +80,6 @@ public class LW_4_1 {
             // отправка результатов в master
             MPI.COMM_WORLD.Send(new double[]{localResult}, 0, 1, MPI.DOUBLE, 0, 3);
         }
-
         // освобождение ресурсов
         MPI.Finalize();
     }

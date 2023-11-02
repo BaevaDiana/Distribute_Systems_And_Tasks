@@ -17,8 +17,6 @@ public class LW_4_3 {
         int N = 1000;
         int[] vector = new int[N];
         int[][] matrix = new int[N][N];
-
-
         // заполнение матрицы и вектора случайными значениями
         int i, j;
         for (i = 0; i < N; i++) {
@@ -27,8 +25,7 @@ public class LW_4_3 {
                 matrix[i][j] = (int) (Math.random() * 100);
             }
         }
-
-        // переопределение двумерной матрицы в массив
+        // переопределение матрицы в массив
         int[] array = new int[N];
         for (i = 0; i < N; i++) {
             for (j = 0; j < N; j++) {
@@ -70,10 +67,10 @@ public class LW_4_3 {
             for (double results : result) {
                 globalResult += results;
             }
-
             System.out.println("Скалярное произведение: " + globalResult);
             System.out.println("Затраченное время: " + elapsedTime + " milliseconds");
         }
+        // освобождение ресурсов
         MPI.Finalize();
     }
 
