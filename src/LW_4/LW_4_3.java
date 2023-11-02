@@ -14,7 +14,7 @@ public class LW_4_3 {
         int size = MPI.COMM_WORLD.Size();
 
         // определение матрицы и вектора
-        int N = 1000;
+        int N = 10000;
         int[] vector = new int[N];
         int[][] matrix = new int[N][N];
         // заполнение матрицы и вектора случайными значениями
