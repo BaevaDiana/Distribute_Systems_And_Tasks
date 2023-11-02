@@ -3,9 +3,10 @@ package LW_4;
 import com.google.common.base.Stopwatch;
 import mpi.*;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-// двухточечный обмен, блокирующий, синхронный
+// двухточечный обмен, блокирующий
 public class LW_4_1 {
     public static void main(String[] args) throws MPIException {
         MPI.Init(args);
@@ -14,14 +15,15 @@ public class LW_4_1 {
 
         if (rank == 0) {
             // определение матрицы и вектора
-            int N = 10000;
+            int N = 1000;
             double[][] matrix = new double[N][N];
             double[] vector = new double[N];
+            Random rand = new Random();
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    matrix[i][j] = Math.random();
+                    matrix[i][j] = rand.nextDouble(100);
                 }
-                vector[i] = Math.random();
+                vector[i] = rand.nextDouble(100);
             }
 
             // отправка данных в slaves
@@ -50,7 +52,7 @@ public class LW_4_1 {
                 results[i] = localResult;
             }
 
-            // итоговый результат глобального скалярного произведения
+            // итоговый результат скалярного произведения
             double globalResult = 0;
             for (double result : results) {
                 globalResult += result;
@@ -74,9 +76,10 @@ public class LW_4_1 {
                 localResult += matrixRow[i] * vector[i];
             }
 
-            // отправка в master
+            // отправка результатов в master
             MPI.COMM_WORLD.Send(new double[]{localResult}, 0, 1, MPI.DOUBLE, 0, 3);
         }
+
         // освобождение ресурсов
         MPI.Finalize();
     }
