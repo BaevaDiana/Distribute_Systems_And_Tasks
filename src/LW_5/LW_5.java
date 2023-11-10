@@ -92,6 +92,10 @@ public class LW_5 {
                             dist[i][j] = newDist;
                         }
                     }
+                    if (i == j)
+                    {
+                        dist[i][j] = 0;
+                    }
                 }
             }
 
@@ -110,7 +114,7 @@ public class LW_5 {
 
             // синхронизируемся с другими процессами
             MPI.COMM_WORLD.Barrier();
-            //
+            // сбор данных от всех процессов и отправка их всем процессам
             MPI.COMM_WORLD.Allgather(array_dist, 0, size,MPI.INT, array_dist, 0,size, MPI.INT);
         }
 
