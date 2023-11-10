@@ -2,6 +2,9 @@ package LW_5;
 
 import mpi.*;
 
+import java.util.concurrent.TimeUnit;
+import com.google.common.base.Stopwatch;
+
 // вычисление диаметра произвольного неориентированного графа
 public class LW_5 {
     public static void main(String[] args) throws MPIException {
@@ -11,6 +14,7 @@ public class LW_5 {
         // выбираем корневой процесс
         int root = 0;
 
+        Stopwatch stopwatch = Stopwatch.createStarted();
         // размер матрицы смежности (количество вершин графа)
         int n = 5;
         // матрица смежности графа
@@ -22,6 +26,7 @@ public class LW_5 {
 
         if (rank == root)
         {
+            stopwatch.reset().start();
             // заполнение матрицы смежности случайными значениями от 0 до 9
             // матрица симметрична, так как граф неориентированный
             int i,j;
@@ -133,7 +138,11 @@ public class LW_5 {
                     }
                 }
             }
+            stopwatch.stop();
+            long elapsedTime = stopwatch.elapsed(TimeUnit.MILLISECONDS);
             System.out.println("Диаметр графа: " + diameter);
+            System.out.println("Затраченное время: " + elapsedTime + " milliseconds");
+
         }
 
         MPI.Finalize();
