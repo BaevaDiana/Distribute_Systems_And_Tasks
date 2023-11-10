@@ -15,7 +15,7 @@ public class LW_4_1 {
 
         if (rank == 0) {
             // определение матрицы и вектора
-            int N = 10000;
+            int N = 100;
             double[][] matrix = new double[N][N];
             double[] vector = new double[N];
             Random rand = new Random();
@@ -58,7 +58,6 @@ public class LW_4_1 {
             for (double result : results) {
                 globalResult += result;
             }
-
             System.out.println("Скалярное произведение: " + globalResult);
             System.out.println("Затраченное время: " + elapsedTime + " milliseconds");
         } else {
