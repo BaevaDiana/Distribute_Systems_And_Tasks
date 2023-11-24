@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import com.google.common.base.Stopwatch;
 
 // вычисление диаметра произвольного неориентированного графа
+
 public class LW_5 {
     public static void main(String[] args) throws MPIException {
         MPI.Init(args);
